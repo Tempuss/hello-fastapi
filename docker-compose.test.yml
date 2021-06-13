@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  hello-fastapi:
+    image: tempus3787/hello-fastapi:latest
+    container_name: hello-fastapi
+    ports:
+      - "0.0.0.0:7000:8000"
+    environment:
+      - PRE_START_PATH=/app/prestart.sh
+      - PORT=8000
+    networks:
+      - test-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+
+networks:
+  test-network:
