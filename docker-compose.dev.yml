@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  postgres-dev:
+    image: postgres:13.3
+    container_name: postgres-dev
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/Users/tempus/dev/python/hello_fastapi/data
+    networks:
+      - dev-network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init-db.sql
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+
+
+networks:
+  dev-network:
