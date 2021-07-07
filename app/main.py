@@ -15,6 +15,8 @@ from fastapi.staticfiles import StaticFiles
 from api.route import app_router
 from core.config.settings import settings
 from custom_logger import CustomizeLogger
+from starlette.middleware.cors import CORSMiddleware
+
 
 tag_list = [
     {
@@ -62,6 +64,14 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
+# Set all CORS enabled origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=False,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(app_router, prefix=settings.API_PREFIX)
 
 # redoc, swagger를 위한 static file mount
