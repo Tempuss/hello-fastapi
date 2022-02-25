@@ -16,3 +16,7 @@ class Base:
 	@declared_attr
 	def __tablename__(cls) -> str:
 		return cls.__name__.lower()
+
+	@declared_attr
+	def __props__(cls):
+		return [i for i in cls.__dict__.keys() if i[:1] != '_']

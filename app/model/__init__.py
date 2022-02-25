@@ -1,1 +1,1 @@
-from .post import Post
+from .domain import Domain

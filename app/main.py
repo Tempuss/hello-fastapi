@@ -17,7 +17,6 @@ from core.config.settings import settings
 from custom_logger import CustomizeLogger
 from starlette.middleware.cors import CORSMiddleware
 
-
 tag_list = [
     {
         "name": "post",

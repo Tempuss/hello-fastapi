@@ -1,6 +1,7 @@
 aiofiles==0.7.0
 aiojobs==0.3.0
 aioredis==2.0.0a1
+alembic==1.6.5
 asgiref==3.3.4
 async-timeout==3.0.1
 attrs==21.2.0
@@ -9,12 +10,15 @@ chardet==4.0.0
 click==8.0.1
 fastapi==0.65.2
 fastapi-plugins==0.8.1
+greenlet==1.1.0
 gunicorn==20.1.0
 h11==0.12.0
 idna==2.10
 importlib-metadata==4.5.0
 iniconfig==1.1.1
 loguru==0.5.3
+Mako==1.1.4
+MarkupSafe==2.0.1
 packaging==20.9
 pluggy==0.13.1
 psycopg2==2.8.6
@@ -22,8 +26,11 @@ py==1.10.0
 pydantic==1.8.2
 pyparsing==2.4.7
 pytest==6.2.4
+python-dateutil==2.8.1
+python-editor==1.0.4
 requests==2.25.1
 six==1.16.0
+SQLAlchemy==1.4.19
 starlette==0.14.2
 tenacity==7.0.0
 toml==0.10.2
