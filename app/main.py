@@ -1,5 +1,7 @@
 import logging
 import os
+import socket
+
 from pathlib import Path
 
 # Fast API Package
@@ -30,8 +32,9 @@ app = FastAPI(
 
 logger_config_path = Path(__file__).with_name('logging_config.json')
 app.logger = CustomizeLogger.make_logger(config_path=logger_config_path)
-
 logger = logging.getLogger("fastapi")
+
+
 
 
 def custom_openapi():
@@ -84,6 +87,7 @@ app.mount(
 )
 
 app.include_router(app_router, prefix=settings.API_PREFIX)
+
 
 
 # redoc, swagger Docs URL

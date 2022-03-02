@@ -63,3 +63,6 @@ class DomainCreateParams(BaseModel):
     sha256: Optional[str] = ""
     first_request_time: Optional[int] = 0
     last_request_time: Optional[int] = 0
+
+
+

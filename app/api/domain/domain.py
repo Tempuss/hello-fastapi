@@ -1,3 +1,4 @@
+import logging
 from starlette.requests import Request
 from sqlalchemy.orm import Session
 from fastapi import (
@@ -24,8 +25,17 @@ from response import (
 )
 from db.generate import get_db_session
 from hashlib import sha256
+from core.kafka.connect import (
+    get_kafka_producer,
+    acked,
+)
+from core.config.settings import settings
+from json import (
+    dumps,
+)
 
 router = APIRouter()
+logger = logging.getLogger("fastapi")
 
 
 @router.get(
@@ -63,6 +73,7 @@ async def get_domain(
 async def create_domain(
         request: Request,
         db: Session = Depends(get_db_session),
+        producer=Depends(get_kafka_producer),
         params: DomainCreateParams = None,
 ):
     params.sha256 = sha256(params.domain.encode()).hexdigest().upper()
@@ -84,6 +95,18 @@ async def create_domain(
         db=db,
         obj_in=DomainCreateParams.parse_obj(obj=params)
     )
+
+    producer.produce(
+        topic=settings.KAFKA_TOPIC,
+        value=dumps(
+            {
+                "domain": params.domain,
+                "id": str(data.id)
+            }
+        ).encode('utf-8'),
+        callback=acked
+    )
+    producer.flush()
 
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
