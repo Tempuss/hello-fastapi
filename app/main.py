@@ -1,5 +1,7 @@
 import logging
 import os
+import socket
+
 from pathlib import Path
 
 # Fast API Package
@@ -15,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from api.route import app_router
 from core.config.settings import settings
 from custom_logger import CustomizeLogger
+from starlette.middleware.cors import CORSMiddleware
 
 tag_list = [
     {
@@ -29,8 +32,9 @@ app = FastAPI(
 
 logger_config_path = Path(__file__).with_name('logging_config.json')
 app.logger = CustomizeLogger.make_logger(config_path=logger_config_path)
-
 logger = logging.getLogger("fastapi")
+
+
 
 
 def custom_openapi():
@@ -62,6 +66,14 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
+# Set all CORS enabled origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=False,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(app_router, prefix=settings.API_PREFIX)
 
 # redoc, swagger를 위한 static file mount
@@ -75,6 +87,7 @@ app.mount(
 )
 
 app.include_router(app_router, prefix=settings.API_PREFIX)
+
 
 
 # redoc, swagger Docs URL

@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
-from api.post import post
+from api.domain import domain
 
 app_router = APIRouter()
 
 app_router.include_router(
-    router=post.router,
-    prefix="/post",
-    tags=["post"],
+    router=domain.router,
+    prefix="/domain",
+    tags=["domain"],
 )
